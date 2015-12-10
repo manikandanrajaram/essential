@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="parking">
+
+  <head>
+    <title>[Packt] Parking</title>
+    <script   src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script>
+    var parking = angular.module("parking", []);
+    
+    parking.controller("parkCtrl", function($scope) {
+      
+      $scope.appTitle = "[Packt] Parking";
+      $scope.cars = [];
+      
+      
+      $scope.park = function(car) {
+        car.entrance = new Date();
+        $scope.cars.push(car);
+        delete $scope.car;
+      };
+      
+      
+    });
+  </script>
+    <style>
+    .selected {
+      background-color: #FAFAD2;
+    }
+  </style>
+  </head>
+
+  <body ng-controller="parkCtrl">
+    <h3 
+    ng-bind="appTitle"></h3>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Plate</th>
+          <th>Entrance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-class="{selected: car.selected}" ng-repeat="car in cars">
+          <td>
+            <input type="checkbox" ngmodel="car.selected" />
+          </td>
+          <td>
+            <span ng-bind="car.plate"></span>
+          </td>
+          <td>
+            <span ng-bind="car.entrance"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <input type="text" ng-model="car.plate" placeholder="What's the plate?" />
+    <button ng-click="park(car)" ng-disabled="!car.plate">
+    Park
+  </button>
+  </body>
+
+</html>
